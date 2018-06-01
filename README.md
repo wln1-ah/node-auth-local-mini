@@ -55,19 +55,20 @@ In this step, we'll go to `manage.auth0.com` to create an account and modify the
 
 ### Summary
 
-In this step, we'll create a `config.js` file and `strategy.js`. We'll add `config.js` to our `.gitignore` so we can keep the client `domain`, `id`, and `secret` off of GitHub. We'll then require it in `strategy.js` and configure `strategy.js` to use the `auth0` strategy.
+In this step, we'll create a `.env` file and `strategy.js`. We'll install and configure the `dotenv` package and add `.env` to our `.gitignore` so we can keep the client `domain`, `id`, and `secret` off of GitHub. We'll then require it in `strategy.js` and configure `strategy.js` to use the `auth0` strategy.
 
 ### Instructions
 
-* Create a `config.js` file.
-* Open `config.js`.
-* Use `module.exports` to export an object.
-  * The object should have a `domain`, `clientID`, and `clientSecret` property that equal strings.
-  * The strings should equal the values of your `domain`, `clientID`, and `clientSecret` from `manage.auth0.com`.
-* Add `config.js` to `.gitignore`.
+* Install `dotenv` by running `npm install --save dotenv`.
+* Create a `.env` file.
+* Open `.env`.
+  * The file should have `DOMAIN`, `CLIENT_ID`, and `CLIENT_SECRET` properties.
+  * The values should equal the values of your `domain`, `clientID`, and `clientSecret` from `manage.auth0.com`.
+* Add `.env` to `.gitignore`.
+* Open `index.js`.
+* Require and configure `dotenv` at the top of the file.
 * Create a `strategy.js` file.
 * Open `strategy.js`.
-* Require `config.js`.
 * Require the `passport-auth0` strategy in a variable called `Auth0Strategy`.
 * Use `module.exports` to export a `new Auth0Strategy`.
   * <details>
@@ -92,7 +93,7 @@ In this step, we'll create a `config.js` file and `strategy.js`. We'll add `conf
     ```
 
     </details>
-* Modify the `domain`, `clientID`, and `clientSecret` to use the values from `config.js`.
+* Modify the `domain`, `clientID`, and `clientSecret` to use the values from `.env`.
 
 ### Solution
 
@@ -102,13 +103,12 @@ In this step, we'll create a `config.js` file and `strategy.js`. We'll add `conf
 
 ```js
 const Auth0Strategy = require('passport-auth0');
-const config = require(`${__dirname}/config.js`);
-const { domain, clientID, clientSecret } = config;
+const { DOMAIN, CLIENT_ID, CLIENT_SECRET } = process.env;
 
 module.exports = new Auth0Strategy({
-   domain:       domain,
-   clientID:     clientID,
-   clientSecret: clientSecret,
+   domain:       DOMAIN,
+   clientID:     CLIENT_ID,
+   clientSecret: CLIENT_SECRET,
    callbackURL:  '/login',
    scope: 'openid email profile'
   },
@@ -144,6 +144,7 @@ In this step, we'll configure our app to use sessions and passport with our newl
 <summary> <code> index.js </code> </summary>
 
 ```js
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
@@ -191,12 +192,14 @@ In this step, we'll use the `serializeUser` and `deserializeUser` methods of pas
 <summary> <code> index.js </code> </summary>
 
 ```js
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const strategy = require(`${__dirname}/strategy.js`);
 
 const app = express();
+
 app.use( session({
   secret: 'sup dude',
   resave: false,
@@ -243,12 +246,14 @@ In this step, we'll create a login endpoint that will call the `authenticate` me
 <summary> <code> index.js </code> </summary>
 
 ```js
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const strategy = require(`${__dirname}/strategy.js`);
 
 const app = express();
+
 app.use( session({
   secret: 'sup dude',
   resave: false,
@@ -297,12 +302,14 @@ In this step, we'll create a `/me` endpoint that checks to see if `req.user` exi
 <summary> <code> index.js </code> </summary>
 
 ```js
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const strategy = require(`${__dirname}/strategy.js`);
 
 const app = express();
+
 app.use( session({
   secret: 'sup dude',
   resave: false,
@@ -320,8 +327,8 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-app.get( '/login', 
-  passport.authenticate('auth0', 
+app.get( '/login',
+  passport.authenticate('auth0',
     { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }
   )
 );
