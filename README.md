@@ -43,7 +43,6 @@ In this step, we'll go to `manage.auth0.com` to create an account and modify the
 * Go to `Applications` using the left navigation bar.
 * Click on `Settings` for the Default App.
   * Change the `Application Type` to `Machine To Machine`.
-  * Change the `Token Endpoint Authentication Method` to `Basic`.
   * Change the `Allowed Callback URLs` to `http://localhost:3000/login`.
   * Change the `Allowed Origins` to `http://localhost:3000`
 * Click `Save Changes`.
