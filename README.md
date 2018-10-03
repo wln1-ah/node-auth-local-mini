@@ -52,7 +52,7 @@ In this step, we'll go to `manage.auth0.com` to create an account and modify the
 
 ### Summary
 
-In this step, we'll create a `.env` file and `strategy.js`. We'll install and configure the `dotenv` package and add `.env` to our `.gitignore` so we can keep the client `domain`, `id`, and `secret` off of GitHub. We'll then use the properties from `dotenv` in `strategy.js` and configure `strategy.js` to use the `auth0` strategy.
+In this step, we'll create a `.env` file and `strategy.js`. We'll install and configure the `dotenv` package and add `.env` to our `.gitignore` so we can keep the client `domain`, `id`, and `secret` off of GitHub. We'll then use the properties from `.env` in `strategy.js` and configure `strategy.js` to use the `auth0` strategy.
 
 ### Instructions
 
