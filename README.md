@@ -34,6 +34,8 @@ In this step, we'll go to `manage.auth0.com` to create an account and modify the
 
 * Go to `manage.auth0.com`.
 * Register for an account.
+  * Create a domain
+    * This can be anything. It will be the url individuals are redirected to when they try to login to your site.
   * Set the account type to `Personal`.
   * Set the role to `Developer`.
   * Set the project to `Just playing around`.
@@ -41,13 +43,8 @@ In this step, we'll go to `manage.auth0.com` to create an account and modify the
 * Go to `Applications` using the left navigation bar.
 * Click on `Settings` for the Default App.
   * Change the `Application Type` to `Machine To Machine`.
-  * Change the `Token Endpoint Authentication Method` to `Basic`.
   * Change the `Allowed Callback URLs` to `http://localhost:3000/login`.
   * Change the `Allowed Origins` to `http://localhost:3000`
-  * Click `Show Advanced Settings`.
-  * Click `OAuth` under `Advanced Settings`.
-  * Toggle off the `OIDC Conformant` toggle.
-  * Scroll back up and toggle off the `Use Auth0 instead of the IdP to do Single Sign On` toggle.
 * Click `Save Changes`.
 * Keep the page open, we'll need the `domain`, `id`, and `secret` later.
 
@@ -55,7 +52,7 @@ In this step, we'll go to `manage.auth0.com` to create an account and modify the
 
 ### Summary
 
-In this step, we'll create a `.env` file and `strategy.js`. We'll install and configure the `dotenv` package and add `.env` to our `.gitignore` so we can keep the client `domain`, `id`, and `secret` off of GitHub. We'll then require it in `strategy.js` and configure `strategy.js` to use the `auth0` strategy.
+In this step, we'll create a `.env` file and `strategy.js`. We'll install and configure the `dotenv` package and add `.env` to our `.gitignore` so we can keep the client `domain`, `id`, and `secret` off of GitHub. We'll then use the properties from `.env` in `strategy.js` and configure `strategy.js` to use the `auth0` strategy.
 
 ### Instructions
 
